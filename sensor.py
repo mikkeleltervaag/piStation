@@ -1,31 +1,85 @@
-import pygame
-import time
-import datetime
-from time import gmtime, strftime
-from random import randint
+import random
 from decimal import *
+import datetime
 
+#My own
 from settings import *
+
+try:
+	import dht11
+	import glob
+except:
+	pass
+
+try:
+	# DHT11
+	GPIO.setwarnings(False)
+	GPIO.setmode(GPIO.BCM)
+	GPIO.cleanup()
+	instance = dht11.DHT11(pin = 4)
+	GPIO.setup(10, GPIO.IN)
+
+	#DS18B20
+	os.system('modprobe w1-gpio')
+	os.system('modprobe w1-therm')
+	base_dir = '/sys/bus/w1/devices/'
+	device_folder = glob.glob(base_dir + '28*')[0]
+	device_file = device_folder + '/w1_slave'
+	
+except:
+	pass
+
+#DS18B20
+def read_temp_raw():
+    f = open(device_file, 'r')
+    lines = f.readlines()
+    f.close()
+    return lines
+def read_temp():
+    lines = read_temp_raw()
+    while lines[0].strip()[-3:] != 'YES':
+        time.sleep(0.2)
+        lines = read_temp_raw()
+    equals_pos = lines[1].find('t=')
+    if equals_pos != -1:
+        temp_string = lines[1][equals_pos+2:]
+        temp_c = float(temp_string) / 1000.0
+        return "%.1f" % temp_c
+
+#Testsensor
+def testSensor():
+	return float(random.randint(-100, 200)/10)
 
 class sensor:
 
-	def __init__(self, hoursStored):
+	def __init__(self, model, hoursStored):
 		self.dataTimes = []
 		self.dataPoints = []
 		self.hoursStored = hoursStored
+		self.model = model 
 
-	def addData(self, dataTime, dataPoint):
-		self.dataTimes.append(dataTime)
+	def addData(self):
+		#try:
+		if self.model == "DS18B20":
+			dataPoint = read_temp()
+		elif self.model == "testSensor":
+			dataPoint = testSensor()
+
 		self.dataPoints.append(Decimal(dataPoint))
+		self.dataTimes.append(datetime.datetime.now())
 		while datetime.datetime.now() - datetime.timedelta(hours=self.hoursStored) > min(self.dataTimes):
 			del self.dataTimes[0]
 			del self.dataPoints[0]
+		#except:
+		#	print "Cannot add data to datalogger"
 
 	def getLastData(self):
 		try:
-			return self.dataPoints[-1]
+			return str(self.dataPoints[-1])
 		except:
 			print "getLastData: No data in list"
+		else:
+			return "none"
 
 	def drawGraph(self, startX, startY, width, height, size=1, color=white, background=False, border=white, bordersize=1, hSeperator=False, vSeperator=False, gridColor=gray, girdSize=1):
 

@@ -1,9 +1,4 @@
 import pygame
-import time
-import datetime
-from time import gmtime, strftime
-from random import randint
-from decimal import *
 
 # Variables
 screenWidth = 1680
