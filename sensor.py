@@ -1,6 +1,7 @@
 import random
 from decimal import *
 import datetime
+import math
 
 #My own
 from settings import *
@@ -37,11 +38,11 @@ def read_temp():
     if equals_pos != -1:
         temp_string = lines[1][equals_pos+2:]
         temp_c = float(temp_string) / 1000.0
-        return "%.1f" % temp_c
+        return temp_c
 
 #Testsensor
 def testSensor():
-	return float(random.randint(-100, 200)/10)
+	return float(random.randint(220, 250))/10
 
 class sensor:
 
@@ -52,56 +53,78 @@ class sensor:
 		self.model = model 
 
 	def addData(self):
-		#try:
-		if self.model == "DS18B20":
-			dataPoint = read_temp()
-		elif self.model == "testSensor":
-			dataPoint = testSensor()
+		try:
+			if self.model == "DS18B20":
+				dataPoint = read_temp()
+			elif self.model == "testSensor":
+				dataPoint = testSensor()
 
-		self.dataPoints.append(Decimal(dataPoint))
-		self.dataTimes.append(datetime.datetime.now())
-		while datetime.datetime.now() - datetime.timedelta(hours=self.hoursStored) > min(self.dataTimes):
-			del self.dataTimes[0]
-			del self.dataPoints[0]
-		#except:
-		#	print "Cannot add data to datalogger"
+			self.dataPoints.append(Decimal(dataPoint))
+			self.dataTimes.append(datetime.datetime.now())
+			while datetime.datetime.now() - datetime.timedelta(hours=self.hoursStored) > min(self.dataTimes):
+				del self.dataTimes[0]
+				del self.dataPoints[0]
+		except:
+			print "Cannot add data to datalogger"
 
 	def getLastData(self):
 		try:
-			return str(self.dataPoints[-1])
+			return str("%.1f" % self.dataPoints[-1])
 		except:
 			print "getLastData: No data in list"
 		else:
 			return "none"
 
-	def drawGraph(self, startX, startY, width, height, size=1, color=white, background=False, border=white, bordersize=1, hSeperator=False, vSeperator=False, gridColor=gray, girdSize=1):
+	def drawGraph(self, startX, startY, width, height, size=1, color=white, background=False, border=white, bordersize=1, hSeperator=False, vSeperator=False, gridColor=gray, girdSize=1, smooth=False):
 
 		if background != False:
 			pygame.draw.rect(screen, (background), (startX, startY, width, height), 0)
 		if border != False:
 			pygame.draw.rect(screen, (border), (startX, startY, width, height), bordersize)
 
-		if len(self.dataPoints) < 2 or max(self.dataPoints) == min(self.dataPoints):
-			screen.blit(debugText.render('Too few data points!', True, color), (startX, startY))
+		if smooth:
+			minimumListItems = smooth+2
 		else:
-			dataHeight = Decimal(height)/Decimal((max(self.dataPoints)-min(self.dataPoints)))
-			dataWidth = Decimal(width)/Decimal((max(self.dataTimes)-min(self.dataTimes)).seconds)
+			minimumListItems = 2
+
+		if len(self.dataPoints) < minimumListItems or max(self.dataPoints) ==  min(self.dataPoints):
+			screen.blit(debugText.render('Too few data points!', True, color), (startX+5, startY+5))
+		else:
+			dataMinimum = min(self.dataPoints)-Decimal(0.1)
+			dataMaximum = max(self.dataPoints)+Decimal(0.1)
+			timeMaximum = max(self.dataTimes)
+			timeMinimum = self.dataTimes[0]
+
+			dataHeight = Decimal(height)/Decimal((dataMaximum-dataMinimum))
+			dataWidth = Decimal(width)/Decimal((max(self.dataTimes)-timeMinimum).seconds)
 
 			if hSeperator == "hour":
-				firstHour = (60-min(self.dataTimes).minute)*60+(60-min(self.dataTimes).second)
-				for x in xrange(0,int(((max(self.dataTimes)-min(self.dataTimes)).seconds)),3600):
+				firstHour = (60-timeMinimum.minute)*60+(60-timeMinimum.second)
+				for x in xrange(0,int(((timeMaximum-timeMinimum).seconds)),3600):
 					pygame.draw.line(screen, gridColor, (startX+((x+firstHour)*dataWidth),startY), (startX+((x+firstHour)*dataWidth),startY+height), girdSize)
 
 			if vSeperator != False:
-				for y in xrange(int(min(self.dataPoints)),int(max(self.dataPoints)), vSeperator):
-					yIn = startY+height-(dataHeight*(y-min(self.dataPoints)))
+				for y in xrange(int(math.ceil(dataMinimum)),int(math.ceil(dataMaximum)), vSeperator):
+					yIn = startY+height-(dataHeight*(y-dataMinimum))
 					if startY+height != yIn:
 						pygame.draw.line(screen, gridColor, (startX,yIn), (startX+width,yIn), girdSize)
-						screen.blit(debugText.render(str(y)+unichr(176).encode("latin-1")+"C", True, color), (startX+width+5, yIn-5))
-
+					if startY+height-30 > yIn:
+						screen.blit(debugText.render(str(y)+unichr(176).encode("latin-1")+"C", True, color), (startX+width-50, yIn+5))
+			
 			for dataPoint in range(2, len(self.dataPoints)):
+
+				if smooth:
+					smoothing = 0
+					for x in xrange(1,smooth):
+						smoothing = smoothing + self.dataPoints[dataPoint-x]
+					point1 = (self.dataPoints[dataPoint-smooth]+smoothing)/smooth
+					point2 = (self.dataPoints[dataPoint]+smoothing)/smooth
+				else:
+					point1 = self.dataPoints[dataPoint-1]
+					point2 = self.dataPoints[dataPoint]
+
 				x1 = startX+((self.dataTimes[dataPoint-2]-min(self.dataTimes)).seconds*dataWidth)
-				y1 = startY+height-(dataHeight*(self.dataPoints[dataPoint-1]-min(self.dataPoints)))
+				y1 = startY+height-(dataHeight*(point1-min(self.dataPoints)))
 				x2 = startX+((self.dataTimes[dataPoint-1]-min(self.dataTimes)).seconds*dataWidth)
-				y2 = startY+height-(dataHeight*(self.dataPoints[dataPoint]-min(self.dataPoints)))
+				y2 = startY+height-(dataHeight*(point2-min(self.dataPoints)))
 				pygame.draw.line(screen, color, (x1,y1), (x2,y2), size)

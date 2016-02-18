@@ -10,7 +10,7 @@ pygame.init()
 pygame.mouse.set_visible(False)
 
 # Fonts
-debugText = pygame.font.SysFont("monospace", 12)
+debugText = pygame.font.SysFont("monospace", 16)
 topText = pygame.font.SysFont("monospace", 60)
 
 # Colors

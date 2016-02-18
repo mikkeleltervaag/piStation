@@ -28,7 +28,7 @@ while True:
 	indoorTemperature.addData()
 
 	# Draw Graph
-	indoorTemperature.drawGraph(10,90,1660,950, size=3, color=green, hSeperator="hour", vSeperator=1)
+	indoorTemperature.drawGraph(10,70,1660,970, size=3, color=green, hSeperator="hour", vSeperator=1, smooth=5)
 
 	# Top of screen
 	screen.blit(topText.render(str(indoorTemperature.getLastData())+unichr(176).encode("latin-1")+"C", True, white), (10, 0))
@@ -36,7 +36,7 @@ while True:
 	
 	#Update screen
 	pygame.display.update()
-	
+
 	#Sleep
 	time.sleep(61-datetime.datetime.now().second)
 	#time.sleep(1)
