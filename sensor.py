@@ -8,26 +8,17 @@ from settings import *
 try:
 	import RPi.GPIO as GPIO
 	import os
-	import dht11
 	import glob
 except:
-	pass
+	print "import error"
 
 try:
-	# DHT11
-	GPIO.setwarnings(False)
-	GPIO.setmode(GPIO.BCM)
-	GPIO.cleanup()
-	instance = dht11.DHT11(pin = 4)
-	GPIO.setup(10, GPIO.IN)
-
 	#DS18B20
 	os.system('modprobe w1-gpio')
 	os.system('modprobe w1-therm')
 	base_dir = '/sys/bus/w1/devices/'
 	device_folder = glob.glob(base_dir + '28*')[0]
 	device_file = device_folder + '/w1_slave'
-	
 except:
 	pass
 
