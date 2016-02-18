@@ -6,6 +6,8 @@ import datetime
 from settings import *
 
 try:
+	import RPi.GPIO as GPIO
+	import os
 	import dht11
 	import glob
 except:
