@@ -10,6 +10,7 @@ try:
 	import RPi.GPIO as GPIO
 	import os
 	import glob
+	import Adafruit_DHT
 except:
 	print "import error"
 
@@ -58,6 +59,12 @@ class sensor:
 				dataPoint = read_temp()
 			elif self.model == "testSensor":
 				dataPoint = testSensor()
+			elif self.model == "dht22_temp":
+				humidity, temperature = Adafruit_DHT.read_retry(Adafruit_DHT.DHT22, 4)
+				dataPoint = temperature
+			elif self.model == "dht22_hum":
+				humidity, temperature = Adafruit_DHT.read_retry(Adafruit_DHT.DHT22, 4)
+				dataPoint = humidity
 
 			self.dataPoints.append(Decimal(dataPoint))
 			self.dataTimes.append(datetime.datetime.now())

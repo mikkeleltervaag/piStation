@@ -16,7 +16,9 @@ except:
 	pass
 
 # Create objects
-indoorTemperature = sensor("DS18B20", 24)
+#indoorTemperature = sensor("DS18B20", 24)
+indoorTemperature = sensor("dht22_temp", 24)
+indoorHumidity = sensor("dht22_hum", 24)
 #indoorTemperature = sensor("testSensor", 24)
 	
 while True:
@@ -28,7 +30,9 @@ while True:
 	indoorTemperature.addData()
 
 	# Draw Graph
-	indoorTemperature.drawGraph(10,70,1660,970, size=3, color=green, hSeperator="hour", vSeperator=1, smooth=5)
+	#indoorTemperature.drawGraph(10,70,1660,970, size=3, color=green, hSeperator="hour", vSeperator=1, smooth=5)
+	indoorTemperature.drawGraph(10,70,1660,400, size=3, color=green, hSeperator="hour", vSeperator=1, smooth=5)
+	indoorHumidity.drawGraph(10,480,1660,400, size=3, color=blue, hSeperator="hour", vSeperator=1, smooth=5)
 
 	# Top of screen
 	screen.blit(topText.render(str(indoorTemperature.getLastData())+unichr(176).encode("latin-1")+"C", True, white), (10, 0))
