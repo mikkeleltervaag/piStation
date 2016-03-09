@@ -28,6 +28,7 @@ while True:
 
 	# Add to datalogger
 	indoorTemperature.addData()
+	indoorHumidity.addData()
 
 	# Draw Graph
 	#indoorTemperature.drawGraph(10,70,1660,970, size=3, color=green, hSeperator="hour", vSeperator=1, smooth=5)
