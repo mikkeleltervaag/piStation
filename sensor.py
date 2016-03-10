@@ -116,7 +116,14 @@ class sensor:
 					if startY+height != yIn:
 						pygame.draw.line(screen, gridColor, (startX,yIn), (startX+width,yIn), girdSize)
 					if startY+height-30 > yIn:
-						screen.blit(debugText.render(str(y)+unichr(176).encode("latin-1")+"C", True, color), (startX+width-50, yIn+5))
+						if self.model == "DS18B20":
+							screen.blit(debugText.render(str(y)+unichr(176).encode("latin-1")+"C", True, color), (startX+width-50, yIn+5))
+						elif self.model == "dht22_temp":
+							screen.blit(debugText.render(str(y)+unichr(176).encode("latin-1")+"C", True, color), (startX+width-50, yIn+5))
+						elif self.model == "dht22_hum":
+							screen.blit(debugText.render(str(y)+"%", True, color), (startX+width-50, yIn+5))
+						else:
+							screen.blit(debugText.render(str(y), True, color), (startX+width-50, yIn+5))
 			
 			for dataPoint in range(2, len(self.dataPoints)):
 
