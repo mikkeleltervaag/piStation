@@ -45,6 +45,14 @@ def read_temp():
 def testSensor():
 	return float(random.randint(220, 250))/10
 
+#Motion sensor
+def pir():
+	from index import motionDetected
+	if motionDetected > 0:
+		return 1
+	else:
+		return 0
+ 
 class sensor:
 
 	def __init__(self, model, hoursStored):
@@ -59,6 +67,8 @@ class sensor:
 				dataPoint = read_temp()
 			elif self.model == "testSensor":
 				dataPoint = testSensor()
+			elif self.model == "pir":
+				dataPoint = pir()
 			elif self.model == "dht22_temp":
 				humidity, temperature = Adafruit_DHT.read_retry(Adafruit_DHT.DHT22, 4)
 				dataPoint = temperature
