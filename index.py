@@ -15,7 +15,7 @@ try:
 	import os
 
 	# GPIO Human detector
-	GPIO.setmode(GPIO.BOARD)
+	GPIO.setmode(GPIO.BCM)
 	GPIO.setup(17, GPIO.IN)
 
 except:
