@@ -5,6 +5,7 @@ from time import gmtime, strftime
 import random
 from decimal import *
 
+
 #Import all settings
 from settings import *
 from sensor import sensor
@@ -14,7 +15,9 @@ try:
 	import os
 
 	# GPIO Human detector
+	GPIO.setmode(GPIO.BOARD)
 	GPIO.setup(17, GPIO.IN)
+
 except:
 	pass
 
@@ -34,11 +37,13 @@ while True:
 	else:
 		everyMinute = False
 
-	
-	if GPIO.input(17):
-		motionDetected = 60
-	elif motionDetected > 0:
-		motionDetected = motionDetected-1
+	try:
+		if GPIO.input(17):
+			motionDetected = 60
+		elif motionDetected > 0:
+			motionDetected = motionDetected-1
+	except:
+		pass
 
 	if everyMinute:
 		# Clear screen
