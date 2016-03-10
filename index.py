@@ -14,7 +14,7 @@ try:
 	import os
 
 	# GPIO Human detector
-	GPIO.setup(14, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+	GPIO.setup(17, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 except:
 	pass
 
@@ -35,7 +35,7 @@ while True:
 		everyMinute = False
 
 	try:
-		if GPIO.input(14):
+		if GPIO.input(17):
 			motionDetected = 60
 		elif motionDetected > 0:
 			motionDetected = motionDetected-1
