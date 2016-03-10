@@ -37,13 +37,12 @@ while True:
 	else:
 		everyMinute = False
 
-	try:
-		if GPIO.input(17):
-			motionDetected = 60
-		elif motionDetected > 0:
-			motionDetected = motionDetected-1
-	except:
-		pass
+	
+	if GPIO.input(17):
+		motionDetected = 60
+	elif motionDetected > 0:
+		motionDetected = motionDetected-1
+	
 
 	if everyMinute:
 		# Clear screen
