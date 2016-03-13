@@ -37,11 +37,11 @@ while True:
 	else:
 		everyMinute = False
 
-	
-	if GPIO.input(17):
-		motionDetected = 60
-	elif motionDetected > 0:
-		motionDetected = motionDetected-1
+	try:
+		if GPIO.input(17):
+			motionDetected = motionDetected + 1
+	except:
+		pass
 	
 
 	if everyMinute:
@@ -53,16 +53,19 @@ while True:
 		indoorHumidity.addData()
 		humanDetector.addData()
 
+		# Reset motion detection
+		motionDetected = 0
+
 		# Draw Graph
 		#indoorTemperature.drawGraph(10,70,1660,970, size=3, color=green, hSeperator="hour", vSeperator=1, smooth=5)
-		humanDetector.drawGraph(10,270,1660,280, size=20, color=darkGray, border=False)
+		humanDetector.drawGraph(10,70,1660,480, size=20, color=darkGray, border=False)
 		indoorTemperature.drawGraph(10,70,1660,480, size=3, color=green, hSeperator="hour", vSeperator=1)
 		indoorHumidity.drawGraph(10,560,1660,480, size=3, color=blue, hSeperator="hour", vSeperator=1)
 
 		# Top of screen
 		screen.blit(topText.render(str(indoorTemperature.getLastData())+unichr(176).encode("latin-1")+"C", True, white), (10, 0))
 		screen.blit(topText.render(str(indoorHumidity.getLastData())+"%", True, white), (300, 0))
-		screen.blit(topText.render(str(motionDetected), True, white), (600, 0))
+		#screen.blit(topText.render(str(motionDetected), True, white), (600, 0))
 		screen.blit(topText.render(strftime("%H:%M", time.localtime()), True, white), (screenWidth-185, 0))
 		
 		#Update screen
