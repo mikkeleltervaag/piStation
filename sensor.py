@@ -104,8 +104,8 @@ class sensor:
 		if len(self.dataPoints) < minimumListItems or max(self.dataPoints) ==  min(self.dataPoints):
 			screen.blit(debugText.render('Too few data points!', True, color), (startX+5, startY+5))
 		else:
-			dataMinimum = min(self.dataPoints)-Decimal(0.1)
-			dataMaximum = max(self.dataPoints)+Decimal(0.1)
+			dataMinimum = min(self.dataPoints)-(min(self.dataPoints)*Decimal(0.1))
+			dataMaximum = max(self.dataPoints)+(max(self.dataPoints)*Decimal(0.1))
 			timeMaximum = max(self.dataTimes)
 			timeMinimum = self.dataTimes[0]
 

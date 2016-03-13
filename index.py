@@ -58,9 +58,9 @@ while True:
 
 		# Draw Graph
 		#indoorTemperature.drawGraph(10,70,1660,970, size=3, color=green, hSeperator="hour", vSeperator=1, smooth=5)
-		humanDetector.drawGraph(10,70,1660,480, size=20, color=darkGray, border=False)
-		indoorTemperature.drawGraph(10,70,1660,480, size=3, color=green, hSeperator="hour", vSeperator=1)
-		indoorHumidity.drawGraph(10,560,1660,480, size=3, color=blue, hSeperator="hour", vSeperator=1)
+		humanDetector.drawGraph(10,70,1660,480, size=20, color=darkGray, border=False, smooth=10)
+		indoorTemperature.drawGraph(10,70,1660,480, size=3, color=green, hSeperator="hour", vSeperator=1, smooth=5)
+		indoorHumidity.drawGraph(10,560,1660,480, size=3, color=blue, hSeperator="hour", vSeperator=1, smooth=5)
 
 		# Top of screen
 		screen.blit(topText.render(str(indoorTemperature.getLastData())+unichr(176).encode("latin-1")+"C", True, white), (10, 0))
