@@ -82,7 +82,7 @@ class sensor:
 				humidity, temperature = Adafruit_DHT.read_retry(Adafruit_DHT.DHT22, 4)
 				dataPoint = humidity
 			elif self.model == 100:
-				dataPoint = aud100
+				dataPoint = aud100()
 
 			self.dataPoints.append(Decimal(dataPoint))
 			self.dataTimes.append(datetime.datetime.now())
