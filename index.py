@@ -67,7 +67,7 @@ while True:
 
 		# Top of screen
 		screen.blit(topText.render(str(indoorTemperature.getLastData())+unichr(176).encode("latin-1")+"C", True, white), (10, 0))
-		screen.blit(topText.render("("+str(indoorTemperature.getLastData())+unichr(176).encode("latin-1")+"C)", True, white), (300, 0))
+		screen.blit(topText.render("("+str(outdoorTemperature.getLastData())+unichr(176).encode("latin-1")+"C)", True, white), (300, 0))
 		screen.blit(topText.render(str(indoorHumidity.getLastData())+"%", True, white), (600, 0))
 		#screen.blit(topText.render(str(motionDetected), True, white), (600, 0))
 		screen.blit(topText.render(strftime("%H:%M", time.localtime()), True, white), (screenWidth-185, 0))
