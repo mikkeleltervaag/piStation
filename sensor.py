@@ -11,11 +11,11 @@ import time
 from settings import *
 
 try:
+	bluetoothSerial = serial.Serial( "/dev/rfcomm1", baudrate=9600 )
 	import RPi.GPIO as GPIO
 	import os
 	import glob
 	import Adafruit_DHT
-	bluetoothSerial = serial.Serial( "/dev/rfcomm1", baudrate=9600 )
 except:
 	print "import error"
 
@@ -57,7 +57,7 @@ def pir():
 
 def aud100():
 	bluetoothSerial.write("100")
-	return int(bluetoothSerial.readline())
+	return int(bluetoothSerial.readline().rstrip('\n').rstrip('\r'))
  
 class sensor:
 
