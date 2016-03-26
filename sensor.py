@@ -56,7 +56,7 @@ def pir():
 	return motionDetected
 
 def aud100():
-	bluetoothSerial.write(100)
+	bluetoothSerial.write("100")
 	return int(bluetoothSerial.readline())
  
 class sensor:
