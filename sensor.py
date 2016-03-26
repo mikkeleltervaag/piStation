@@ -57,7 +57,7 @@ def pir():
 
 def aud100():
 	bluetoothSerial.write("100")
-	return float(bluetoothSerial.readline().rstrip('\n\r')
+	return float(bluetoothSerial.readline().rstrip('\n\r'))
  
 class sensor:
 
