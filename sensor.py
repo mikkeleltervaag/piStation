@@ -2,7 +2,6 @@ import random
 from decimal import *
 import datetime
 import math
-import serial
 import time
 
 
@@ -11,11 +10,12 @@ import time
 from settings import *
 
 try:
-	bluetoothSerial = serial.Serial( "/dev/rfcomm1", baudrate=9600 )
+	import serial
 	import RPi.GPIO as GPIO
 	import os
 	import glob
 	import Adafruit_DHT
+	bluetoothSerial = serial.Serial( "/dev/rfcomm1", baudrate=9600 )
 except:
 	print "import error"
 
@@ -55,8 +55,8 @@ def pir():
 	from index import motionDetected
 	return motionDetected
 
-def aud100():
-	bluetoothSerial.write("100")
+def blueTooth(num):
+	bluetoothSerial.write(str(num))
 	test = float(bluetoothSerial.readline().rstrip('\n\r'))
 	print test
 	return test
@@ -84,7 +84,9 @@ class sensor:
 				humidity, temperature = Adafruit_DHT.read_retry(Adafruit_DHT.DHT22, 4)
 				dataPoint = humidity
 			elif self.model == 100:
-				dataPoint = aud100()
+				dataPoint = blueTooth(100)
+			elif self.model == 101:
+				dataPoint = blueTooth(101)
 
 			self.dataPoints.append(Decimal(dataPoint))
 			self.dataTimes.append(datetime.datetime.now())
