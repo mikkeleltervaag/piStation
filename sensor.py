@@ -131,6 +131,11 @@ class sensor:
 				if checkDataMaximum < dataMaximum:
 					dataMaximum = checkDataMaximum
 
+				print dataMinimum
+				print checkDataMinimum
+				print dataMaximum
+				print checkDataMaximum
+
 
 
 
