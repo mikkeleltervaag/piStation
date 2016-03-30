@@ -27,7 +27,7 @@ motionDetected = 0
 #indoorTemperature = sensor("DS18B20", 24)
 indoorTemperature = sensor("dht22_temp", 24)
 outdoorTemperature = sensor(100, 24)
-bedroomTemperature = sensor(100, 24)
+bedroomTemperature = sensor(101, 24)
 indoorHumidity = sensor("dht22_hum", 24)
 humanDetector = sensor("pir", 24)
 #indoorTemperature = sensor("testSensor", 24)
@@ -53,6 +53,7 @@ while True:
 		# Add to datalogger
 		indoorTemperature.addData()
 		outdoorTemperature.addData()
+		bedroomTemperature.addData()
 		indoorHumidity.addData()
 		humanDetector.addData()
 
