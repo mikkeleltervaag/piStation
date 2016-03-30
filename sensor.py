@@ -104,7 +104,7 @@ class sensor:
 		else:
 			return "none"
 
-	def drawGraph(self, startX, startY, width, height, size=1, color=white, background=False, border=white, bordersize=1, hSeperator=False, vSeperator=False, gridColor=gray, girdSize=1, smooth=False):
+	def drawGraph(self, startX, startY, width, height, size=1, color=white, background=False, border=white, bordersize=1, hSeperator=False, vSeperator=False, gridColor=gray, girdSize=1, smooth=False, shared=False):
 
 		if background != False:
 			pygame.draw.rect(screen, (background), (startX, startY, width, height), 0)
@@ -121,6 +121,19 @@ class sensor:
 		else:
 			dataMinimum = min(self.dataPoints)-((max(self.dataPoints)-min(self.dataPoints))*Decimal(0.1))
 			dataMaximum = max(self.dataPoints)+((max(self.dataPoints)-min(self.dataPoints))*Decimal(0.1))
+
+			if shared != False:
+				checkDataMinimum = min(shared)-((max(shared)-min(shared))*Decimal(0.1))
+				checkDataMaximum = max(shared)+((max(shared)-min(shared))*Decimal(0.1))
+
+				if checkDataMinimum < dataMinimum:
+					dataMinimum = checkDataMinimum
+				if checkDataMaximum < dataMaximum:
+					dataMaximum = checkDataMaximum
+
+
+
+
 			timeMaximum = max(self.dataTimes)
 			timeMinimum = self.dataTimes[0]
 
