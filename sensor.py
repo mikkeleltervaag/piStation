@@ -123,18 +123,25 @@ class sensor:
 			dataMaximum = max(self.dataPoints)+((max(self.dataPoints)-min(self.dataPoints))*Decimal(0.1))
 
 			if shared != False:
+
+				print "//////////////////////////////"
+				print dataMinimum
+				print dataMaximum
+
 				checkDataMinimum = min(shared)-((max(shared)-min(shared))*Decimal(0.1))
 				checkDataMaximum = max(shared)+((max(shared)-min(shared))*Decimal(0.1))
 
-				if checkDataMinimum < dataMinimum:
+				if checkDataMinimum < dataMinimum and checkDataMinimum != 0:
 					dataMinimum = checkDataMinimum
-				if checkDataMaximum < dataMaximum:
+				if checkDataMaximum > dataMaximum:
 					dataMaximum = checkDataMaximum
 
-				print dataMinimum
+				print "/////////////"
 				print checkDataMinimum
-				print dataMaximum
 				print checkDataMaximum
+				print "/////////////"
+				print dataMinimum
+				print dataMaximum
 
 
 
