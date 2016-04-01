@@ -35,7 +35,7 @@ indoorHumidity = sensor("dht22_hum", 24)
 humanDetector = sensor("pir", 24)
 #indoorTemperature = sensor("testSensor", 24)
 
-indoorTemperature. = ("indoorTemperature.csv")
+indoorTemperature = ("indoorTemperature.csv")
 	
 while True:
 
