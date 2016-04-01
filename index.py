@@ -21,8 +21,8 @@ try:
 except:
 	pass
 
-thisMinute = datetime.now().minute + 1
-thisHour = datetime.now().hour + 1
+thisMinute = datetime.now().minute - 1
+thisHour = datetime.now().hour - 1
 
 motionDetected = 0
 
@@ -93,7 +93,7 @@ while True:
 		#Update screen
 		pygame.display.update()
 
-	if everyHour:
+	#if everyHour:
 		storeData("indoorTemperature.csv")
 
 	#Sleep
