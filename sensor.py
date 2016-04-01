@@ -167,7 +167,7 @@ class sensor:
 
 
 			dataHeight = Decimal(height)/Decimal((dataMaximum-dataMinimum))
-			dataWidth = Decimal(width)/Decimal((max(self.dataTimes)-timeMinimum).seconds)
+			dataWidth = Decimal(width)/Decimal((timeMaximum-timeMinimum).seconds)
 
 			if hSeperator == "hour":
 				firstHour = (60-timeMinimum.minute)*60+(60-timeMinimum.second)
