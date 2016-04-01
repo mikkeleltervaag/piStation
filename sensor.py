@@ -146,7 +146,7 @@ class sensor:
 			timeMaximum = max(self.dataTimes)
 			timeMinimum = self.dataTimes[0]
 
-			if shared != False:
+			if shared != False and dataPoints > 1:
 
 				checkDataMinimum = min(shared.dataPoints)-((max(shared.dataPoints)-min(shared.dataPoints))*Decimal(0.1))
 				checkDataMaximum = max(shared.dataPoints)+((max(shared.dataPoints)-min(shared.dataPoints))*Decimal(0.1))
