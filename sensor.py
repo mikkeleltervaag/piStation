@@ -107,8 +107,8 @@ class sensor:
 		    reader = csv.reader(f)
 		    for row in reader:
 		    	if datetime.datetime.now() - datetime.timedelta(hours=self.hoursStored) < row[0]:
-			        self.dataPoints.append(row[1])
-					self.dataTimes.append(row[0])
+		    		self.dataPoints.append(row[1])
+		    		self.dataTimes.append(row[0])
 
 	def getLastData(self):
 		try:
