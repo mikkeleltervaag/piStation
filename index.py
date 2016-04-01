@@ -26,10 +26,6 @@ thisHour = datetime.now().hour - 1
 
 motionDetected = 0
 
-with open('slettDenne.csv', 'ab') as fp:
-	indoorTemperatureCSV = csv.writer(fp)
-	for i in range(1,10):
-		indoorTemperatureCSV.writerow([1] + [i])
 
 # Create objects
 #indoorTemperature = sensor("DS18B20", 24)
