@@ -103,15 +103,13 @@ class sensor:
 			indoorTemperatureCSV.writerow([self.dataTimes[-1]] + [self.dataPoints[-1]])
 
 	def importData(self, name):
-		try:
-			with open(name, 'rb') as f:
-			    reader = csv.reader(f)
-			    for row in reader:
-			    	if datetime.datetime.now() - datetime.timedelta(hours=self.hoursStored) < row[0]:
-			    		self.dataPoints.append(row[1])
-			    		self.dataTimes.append(row[0])
-		except:
-			pass
+		with open(name, 'rb') as f:
+		    reader = csv.reader(f)
+		    for row in reader:
+		    	if datetime.datetime.now() - datetime.timedelta(hours=self.hoursStored) < row[0]:
+		    		self.dataPoints.append(row[1])
+		    		self.dataTimes.append(row[0])
+
 
 	def getLastData(self):
 		try:
