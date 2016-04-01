@@ -108,7 +108,7 @@ class sensor:
 		    for row in reader:
 		    	if datetime.datetime.now() - datetime.timedelta(hours=self.hoursStored) < datetime.datetime.strptime(row[0], "%Y-%m-%d %H:%M:%S.%f"):
 		    		self.dataPoints.append(row[1])
-		    		self.dataTimes.append(datetime.datetime.strptime(row[0]), "%Y-%m-%d %H:%M:%S.%f")
+		    		self.dataTimes.append(datetime.datetime.strptime(row[0], "%Y-%m-%d %H:%M:%S.%f")
 
 
 	def getLastData(self):
