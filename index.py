@@ -37,6 +37,10 @@ humanDetector = sensor("pir", 24)
 #indoorTemperature = sensor("testSensor", 24)
 
 indoorTemperature.importData('indoorTemperature.csv')
+outdoorTemperature.importData('outdoorTemperature.csv')
+bedroomTemperature.importData('bedroomTemperature.csv')
+indoorHumidity.importData('indoorHumidity.csv')
+humanDetector.importData('humanDetector.csv')
 	
 while True:
 
@@ -77,7 +81,7 @@ while True:
 		#indoorTemperature.drawGraph(10,70,1660,970, size=3, color=green, hSeperator="hour", vSeperator=1, smooth=5)
 		humanDetector.drawGraph(10,70,1660,480, size=20, color=darkGray, border=False, smooth=10)
 		bedroomTemperature.drawGraph(10,70,1660,480, size=3, color=blue, border=False, shared=indoorTemperature.dataPoints)
-		indoorTemperature.drawGraph(10,70,1660,480, size=3, color=green, hSeperator="hour", vSeperator=1, shared=bedroomTemperature.dataPoints)
+		indoorTemperature.drawGraph(10,70,1660,480, size=3, color=green, hSeperator="hour", vSeperator=1, shared=bedroomTemperature)
 		outdoorTemperature.drawGraph(10,560,825,480, size=3, color=green, hSeperator="hour", vSeperator=1)
 		indoorHumidity.drawGraph(850,560,825,480, size=3, color=blue, hSeperator="hour", vSeperator=1)
 
@@ -94,8 +98,12 @@ while True:
 		#Update screen
 		pygame.display.update()
 
-	#if everyHour:
+	if everyHour:
 		indoorTemperature.storeData('indoorTemperature.csv')
+		outdoorTemperature.storeData('outdoorTemperature.csv')
+		bedroomTemperature.storeData('bedroomTemperature.csv')
+		indoorHumidity.storeData('indoorHumidity.csv')
+		humanDetector.storeData('humanDetector.csv')
 
 	#Sleep
 	#time.sleep(61-datetime.datetime.now().second)
