@@ -98,9 +98,12 @@ class sensor:
 			print "Cannot add data to datalogger"
 
 	def storeData(self, name):
-		with open(name, 'ab') as fp:
-			indoorTemperatureCSV = csv.writer(fp)
-			indoorTemperatureCSV.writerow([self.dataTimes[-1]] + [self.dataPoints[-1]])
+		try:
+			with open(name, 'ab') as fp:
+				indoorTemperatureCSV = csv.writer(fp)
+				indoorTemperatureCSV.writerow([self.dataTimes[-1]] + [self.dataPoints[-1]])
+		except:
+			pass
 
 	def importData(self, name):
 		with open(name, 'rb') as f:
