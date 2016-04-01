@@ -161,9 +161,9 @@ class sensor:
 					checkTimeMaximum = max(shared.dataTimes)
 
 					if checkTimeMinimum < timeMinimum:
-						timeMaximum = checkTimeMinimum
+						timeMinimum = checkTimeMinimum
 					if checkTimeMaximum > timeMaximum:
-						timeMinimum = checkTimeMaximum
+						timeMaximum = checkTimeMaximum
 
 
 			dataHeight = Decimal(height)/Decimal((dataMaximum-dataMinimum))
