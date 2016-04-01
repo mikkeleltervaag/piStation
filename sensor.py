@@ -205,6 +205,6 @@ class sensor:
 
 				x1 = startX+((self.dataTimes[dataPoint-2]-timeMinimum).seconds*dataWidth)
 				y1 = startY+height-(dataHeight*(point1-dataMinimum))
-				x2 = startX+((self.dataTimes[dataPoint-1]-timeMaximum).seconds*dataWidth)
+				x2 = startX+((self.dataTimes[dataPoint-1]-timeMinimum).seconds*dataWidth)
 				y2 = startY+height-(dataHeight*(point2-dataMinimum))
 				pygame.draw.line(screen, color, (x1,y1), (x2,y2), size)
