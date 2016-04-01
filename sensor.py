@@ -57,6 +57,7 @@ def pir():
 	return motionDetected
 
 def blueTooth(num):
+	bluetoothSerial = serial.Serial( "/dev/rfcomm1", baudrate=9600 )
 	bluetoothSerial.write(str(num))
 	test = float(bluetoothSerial.readline().rstrip('\n\r'))
 	print test

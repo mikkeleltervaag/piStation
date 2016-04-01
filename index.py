@@ -80,7 +80,7 @@ while True:
 		# Draw Graph
 		#indoorTemperature.drawGraph(10,70,1660,970, size=3, color=green, hSeperator="hour", vSeperator=1, smooth=5)
 		humanDetector.drawGraph(10,70,1660,480, size=20, color=darkGray, border=False, smooth=10)
-		bedroomTemperature.drawGraph(10,70,1660,480, size=3, color=blue, border=False, shared=indoorTemperature.dataPoints)
+		bedroomTemperature.drawGraph(10,70,1660,480, size=3, color=blue, border=False, shared=indoorTemperature)
 		indoorTemperature.drawGraph(10,70,1660,480, size=3, color=green, hSeperator="hour", vSeperator=1, shared=bedroomTemperature)
 		outdoorTemperature.drawGraph(10,560,825,480, size=3, color=green, hSeperator="hour", vSeperator=1)
 		indoorHumidity.drawGraph(850,560,825,480, size=3, color=blue, hSeperator="hour", vSeperator=1)
