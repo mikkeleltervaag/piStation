@@ -147,22 +147,23 @@ class sensor:
 			timeMinimum = self.dataTimes[0]
 
 			if shared != False and len(self.dataPoints) > 1:
+				if len(shared.dataPoints) > 1:
 
-				checkDataMinimum = min(shared.dataPoints)-((max(shared.dataPoints)-min(shared.dataPoints))*Decimal(0.1))
-				checkDataMaximum = max(shared.dataPoints)+((max(shared.dataPoints)-min(shared.dataPoints))*Decimal(0.1))
+					checkDataMinimum = min(shared.dataPoints)-((max(shared.dataPoints)-min(shared.dataPoints))*Decimal(0.1))
+					checkDataMaximum = max(shared.dataPoints)+((max(shared.dataPoints)-min(shared.dataPoints))*Decimal(0.1))
 
-				if checkDataMinimum < dataMinimum and checkDataMinimum != 0:
-					dataMinimum = checkDataMinimum
-				if checkDataMaximum > dataMaximum:
-					dataMaximum = checkDataMaximum
+					if checkDataMinimum < dataMinimum and checkDataMinimum != 0:
+						dataMinimum = checkDataMinimum
+					if checkDataMaximum > dataMaximum:
+						dataMaximum = checkDataMaximum
 
-				checkTimeMinimum = min(shared.dataTimes)-((max(shared.dataTimes)-min(shared.dataTimes))*Decimal(0.1))
-				checkTimeMaximum = max(shared.dataTimes)+((max(shared.dataTimes)-min(shared.dataTimes))*Decimal(0.1))
+					checkTimeMinimum = min(shared.dataTimes)-((max(shared.dataTimes)-min(shared.dataTimes))*Decimal(0.1))
+					checkTimeMaximum = max(shared.dataTimes)+((max(shared.dataTimes)-min(shared.dataTimes))*Decimal(0.1))
 
-				if checkTimeMinimum < timeMinimum:
-					timeMaximum = checkTimeMinimum
-				if checkTimeMaximum > timeMaximum:
-					timeMinimum = checkTimeMaximum
+					if checkTimeMinimum < timeMinimum:
+						timeMaximum = checkTimeMinimum
+					if checkTimeMaximum > timeMaximum:
+						timeMinimum = checkTimeMaximum
 
 
 			dataHeight = Decimal(height)/Decimal((dataMaximum-dataMinimum))
