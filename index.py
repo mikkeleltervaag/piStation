@@ -26,6 +26,11 @@ thisHour = datetime.now().hour - 1
 
 motionDetected = 0
 
+with open('slettDenne.csv', 'ab') as fp:
+	indoorTemperatureCSV = csv.writer(fp)
+	for i in range(1,10):
+		indoorTemperatureCSV.writerow([datetime.now() + timedelta(minutes=i*60)] + [i])
+
 # Create objects
 #indoorTemperature = sensor("DS18B20", 24)
 indoorTemperature = sensor("dht22_temp", 24)
@@ -35,7 +40,7 @@ indoorHumidity = sensor("dht22_hum", 24)
 humanDetector = sensor("pir", 24)
 #indoorTemperature = sensor("testSensor", 24)
 
-indoorTemperature.importData("indoorTemperature.csv")
+indoorTemperature.importData('indoorTemperature.csv')
 	
 while True:
 
@@ -94,7 +99,7 @@ while True:
 		pygame.display.update()
 
 	#if everyHour:
-		storeData("indoorTemperature.csv")
+		storeData('indoorTemperature.csv')
 
 	#Sleep
 	#time.sleep(61-datetime.datetime.now().second)
