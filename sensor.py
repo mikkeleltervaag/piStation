@@ -12,6 +12,7 @@ from settings import *
 
 try:
 	import serial
+	bluetoothSerial = serial.Serial( "/dev/rfcomm1", baudrate=9600 )
 	import RPi.GPIO as GPIO
 	import os
 	import glob
@@ -56,7 +57,6 @@ def pir():
 	return motionDetected
 
 def blueTooth(num):
-	bluetoothSerial = serial.Serial( "/dev/rfcomm1", baudrate=9600 )
 	bluetoothSerial.write(str(num))
 	test = float(bluetoothSerial.readline().rstrip('\n\r'))
 	print test
@@ -103,12 +103,15 @@ class sensor:
 			indoorTemperatureCSV.writerow([self.dataTimes] + [self.dataPoints[-1]])
 
 	def importData(self, name):
-		with open(name, 'rb') as f:
-		    reader = csv.reader(f)
-		    for row in reader:
-		    	if datetime.datetime.now() - datetime.timedelta(hours=self.hoursStored) < row[0]:
-		    		self.dataPoints.append(row[1])
-		    		self.dataTimes.append(row[0])
+		try:
+			with open(name, 'rb') as f:
+			    reader = csv.reader(f)
+			    for row in reader:
+			    	if datetime.datetime.now() - datetime.timedelta(hours=self.hoursStored) < row[0]:
+			    		self.dataPoints.append(row[1])
+			    		self.dataTimes.append(row[0])
+		except:
+			pass
 
 	def getLastData(self):
 		try:
@@ -136,7 +139,7 @@ class sensor:
 			dataMinimum = min(self.dataPoints)-((max(self.dataPoints)-min(self.dataPoints))*Decimal(0.1))
 			dataMaximum = max(self.dataPoints)+((max(self.dataPoints)-min(self.dataPoints))*Decimal(0.1))
 
-			if shared != False:
+			if shared != False and len(shared) > 1:
 
 
 				checkDataMinimum = min(shared)-((max(shared)-min(shared))*Decimal(0.1))
