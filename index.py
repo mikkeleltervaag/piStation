@@ -47,7 +47,7 @@ while True:
 		everyMinute = False
 
 	if datetime.now().hour == thisHour + 1:
-		thisHour = datetime.datetime.now().hour
+		thisHour = datetime.now().hour
 		everyHour = True
 	else:
 		everyHour = False
