@@ -95,7 +95,7 @@ while True:
 		pygame.display.update()
 
 	#if everyHour:
-		storeData('indoorTemperature.csv')
+		indoorTemperature.storeData('indoorTemperature.csv')
 
 	#Sleep
 	#time.sleep(61-datetime.datetime.now().second)
