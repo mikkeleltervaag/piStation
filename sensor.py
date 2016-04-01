@@ -165,6 +165,7 @@ class sensor:
 						timeMinimum = checkTimeMinimum
 					if checkTimeMaximum > timeMaximum:
 						timeMaximum = checkTimeMaximum
+						addStart = checkTimeMaximum-timeMaximum
 
 
 			dataHeight = Decimal(height)/Decimal((dataMaximum-dataMinimum))
@@ -202,8 +203,8 @@ class sensor:
 					point1 = self.dataPoints[dataPoint-1]
 					point2 = self.dataPoints[dataPoint]
 
-				x1 = startX+((self.dataTimes[dataPoint-2]-min(self.dataTimes)).seconds*dataWidth)
+				x1 = startX+((self.dataTimes[dataPoint-2]-min(self.dataTimes)+addStart).seconds*dataWidth)
 				y1 = startY+height-(dataHeight*(point1-dataMinimum))
-				x2 = startX+((self.dataTimes[dataPoint-1]-min(self.dataTimes)).seconds*dataWidth)
+				x2 = startX+((self.dataTimes[dataPoint-1]-min(self.dataTimes)+addStart).seconds*dataWidth)
 				y2 = startY+height-(dataHeight*(point2-dataMinimum))
 				pygame.draw.line(screen, color, (x1,y1), (x2,y2), size)
