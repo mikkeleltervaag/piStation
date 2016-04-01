@@ -3,6 +3,7 @@ from decimal import *
 import datetime
 import math
 import time
+import csv
 
 
 
@@ -15,7 +16,6 @@ try:
 	import os
 	import glob
 	import Adafruit_DHT
-	bluetoothSerial = serial.Serial( "/dev/rfcomm1", baudrate=9600 )
 except:
 	print "import error"
 
@@ -56,6 +56,7 @@ def pir():
 	return motionDetected
 
 def blueTooth(num):
+	bluetoothSerial = serial.Serial( "/dev/rfcomm1", baudrate=9600 )
 	bluetoothSerial.write(str(num))
 	test = float(bluetoothSerial.readline().rstrip('\n\r'))
 	print test
@@ -96,6 +97,19 @@ class sensor:
 		except:
 			print "Cannot add data to datalogger"
 
+	def storeData(self, name):
+		with open(name, 'ab') as fp:
+			indoorTemperatureCSV = csv.writer(fp)
+			indoorTemperatureCSV.writerow([self.dataTimes] + [self.dataPoints[-1]])
+
+	def importData(self, name):
+		with open(name, 'rb') as f:
+		    reader = csv.reader(f)
+		    for row in reader:
+		    	if datetime.datetime.now() - datetime.timedelta(hours=self.hoursStored) < row[0]:
+			        self.dataPoints.append(row[1])
+					self.dataTimes.append(row[0])
+
 	def getLastData(self):
 		try:
 			return str("%.1f" % self.dataPoints[-1])
@@ -124,9 +138,6 @@ class sensor:
 
 			if shared != False:
 
-				print "//////////////////////////////"
-				print dataMinimum
-				print dataMaximum
 
 				checkDataMinimum = min(shared)-((max(shared)-min(shared))*Decimal(0.1))
 				checkDataMaximum = max(shared)+((max(shared)-min(shared))*Decimal(0.1))
@@ -136,12 +147,6 @@ class sensor:
 				if checkDataMaximum > dataMaximum:
 					dataMaximum = checkDataMaximum
 
-				print "/////////////"
-				print checkDataMinimum
-				print checkDataMaximum
-				print "/////////////"
-				print dataMinimum
-				print dataMaximum
 
 
 

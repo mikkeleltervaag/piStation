@@ -1,6 +1,6 @@
 import pygame
 import time
-import datetime
+from datetime import datetime, timedelta
 from time import gmtime, strftime
 import random
 from decimal import *
@@ -21,6 +21,9 @@ try:
 except:
 	pass
 
+thisMinute = datetime.now().minute + 1
+thisHour = datetime.now().hour + 1
+
 motionDetected = 0
 
 # Create objects
@@ -34,10 +37,17 @@ humanDetector = sensor("pir", 24)
 	
 while True:
 
-	if datetime.datetime.now().second == 0:
+	if datetime.now().minute == thisMinute + 1:
+		thisMinute = datetime.now().minute
 		everyMinute = True
 	else:
 		everyMinute = False
+
+	if datetime.now().hour == thisHour + 1:
+		thisHour = datetime.datetime.now().hour
+		everyHour = True
+	else:
+		everyHour = False
 
 	try:
 		if GPIO.input(17):
