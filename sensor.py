@@ -106,12 +106,15 @@ class sensor:
 			pass
 
 	def importData(self, name):
-		with open(name, 'rb') as f:
-		    reader = csv.reader(f)
-		    for row in reader:
-		    	if datetime.datetime.now() - datetime.timedelta(hours=self.hoursStored) < datetime.datetime.strptime(row[0], "%Y-%m-%d %H:%M:%S.%f"):
-		    		self.dataPoints.append(Decimal(row[1]))
-		    		self.dataTimes.append(datetime.datetime.strptime(row[0], "%Y-%m-%d %H:%M:%S.%f"))
+		try:
+			with open(name, 'rb') as f:
+			    reader = csv.reader(f)
+			    for row in reader:
+			    	if datetime.datetime.now() - datetime.timedelta(hours=self.hoursStored) < datetime.datetime.strptime(row[0], "%Y-%m-%d %H:%M:%S.%f"):
+			    		self.dataPoints.append(Decimal(row[1]))
+			    		self.dataTimes.append(datetime.datetime.strptime(row[0], "%Y-%m-%d %H:%M:%S.%f"))
+		except:
+			pass
 
 
 	def getLastData(self):
