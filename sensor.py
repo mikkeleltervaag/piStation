@@ -100,7 +100,7 @@ class sensor:
 	def storeData(self, name):
 		with open(name, 'ab') as fp:
 			indoorTemperatureCSV = csv.writer(fp)
-			indoorTemperatureCSV.writerow([self.dataTimes] + [self.dataPoints[-1]])
+			indoorTemperatureCSV.writerow([self.dataTimes[-1]] + [self.dataPoints[-1]])
 
 	def importData(self, name):
 		try:
