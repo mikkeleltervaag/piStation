@@ -56,6 +56,8 @@ while True:
 	else:
 		everyHour = False
 
+	print thisHour
+
 	try:
 		if GPIO.input(17):
 			motionDetected = motionDetected + 1
