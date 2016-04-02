@@ -68,15 +68,19 @@ while True:
 		# Clear screen
 		screen.fill(black)
 
+		print "test 1"
+
 		# Add to datalogger
 		indoorTemperature.addData()
 		outdoorTemperature.addData()
 		bedroomTemperature.addData()
 		indoorHumidity.addData()
 		humanDetector.addData()
+		print "test 2"
 
 		# Reset motion detection
 		motionDetected = 0
+		print "test 3"
 
 		# Draw Graph
 		#indoorTemperature.drawGraph(10,70,1660,970, size=3, color=green, hSeperator="hour", vSeperator=1, smooth=5)
@@ -85,6 +89,7 @@ while True:
 		indoorTemperature.drawGraph(10,70,1660,480, size=3, color=green, hSeperator="hour", vSeperator=1, shared=bedroomTemperature)
 		outdoorTemperature.drawGraph(10,560,825,480, size=3, color=green, hSeperator="hour", vSeperator=1)
 		indoorHumidity.drawGraph(850,560,825,480, size=3, color=blue, hSeperator="hour", vSeperator=1)
+		print "test 4"
 
 		# Top of screen
 		topInfo = str(indoorTemperature.getLastData())+unichr(176).encode("latin-1")+"C "
@@ -93,11 +98,12 @@ while True:
 		topInfo = topInfo + str(indoorHumidity.getLastData())+"%"
 		#screen.blit(topText.render(str(motionDetected), True, white), (600, 0))
 		screen.blit(topText.render(strftime("%H:%M", time.localtime()), True, white), (screenWidth-185, 0))
-
 		screen.blit(topText.render(topInfo, True, white), (10, 0))
+		print "test 5"
 		
 		#Update screen
 		pygame.display.update()
+		print "test 6"
 
 	#if everyHour:
 		indoorTemperature.storeData('indoorTemperature.csv')
@@ -105,6 +111,8 @@ while True:
 		bedroomTemperature.storeData('bedroomTemperature.csv')
 		indoorHumidity.storeData('indoorHumidity.csv')
 		humanDetector.storeData('humanDetector.csv')
+		print "test 7"
+
 
 	#Sleep
 	#time.sleep(61-datetime.datetime.now().second)
