@@ -98,7 +98,7 @@ while True:
 		#Update screen
 		pygame.display.update()
 
-	if everyHour:
+	#if everyHour:
 		indoorTemperature.storeData('indoorTemperature.csv')
 		outdoorTemperature.storeData('outdoorTemperature.csv')
 		bedroomTemperature.storeData('bedroomTemperature.csv')

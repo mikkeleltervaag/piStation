@@ -101,8 +101,8 @@ class sensor:
 	def storeData(self, name):
 		try:
 			with open(name, 'ab') as fp:
-				indoorTemperatureCSV = csv.writer(fp)
-				indoorTemperatureCSV.writerow([self.dataTimes[-1]] + [self.dataPoints[-1]])
+				saveCSV = csv.writer(fp)
+				saveCSV.writerow([self.dataTimes[-1]] + [self.dataPoints[-1]])
 		except:
 			pass
 
