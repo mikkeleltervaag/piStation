@@ -12,7 +12,7 @@ from settings import *
 
 try:
 	import serial
-	bluetoothSerial = serial.Serial( "/dev/rfcomm1", baudrate=9600 )
+	bluetoothSerial = serial.Serial( "/dev/rfcomm1", baudrate=9600, timeout=10 )
 	import RPi.GPIO as GPIO
 	import os
 	import glob
@@ -57,11 +57,12 @@ def pir():
 	return motionDetected
 
 def blueTooth(num):
-	bluetoothSerial = serial.Serial( "/dev/rfcomm1", baudrate=9600 )
-	bluetoothSerial.write(str(num))
-	test = float(bluetoothSerial.readline().rstrip('\n\r'))
-	print test
-	return test
+	try:
+		bluetoothSerial = serial.Serial( "/dev/rfcomm1", baudrate=9600, timeout=10 )
+		bluetoothSerial.write(str(num))
+		test = float(bluetoothSerial.readline().rstrip('\n\r'))
+	except:
+		pass
  
 class sensor:
 
