@@ -36,11 +36,11 @@ indoorHumidity = sensor("dht22_hum", 24)
 humanDetector = sensor("pir", 24)
 #indoorTemperature = sensor("testSensor", 24)
 
-indoorTemperature.importData('indoorTemperature.csv')
-outdoorTemperature.importData('outdoorTemperature.csv')
-bedroomTemperature.importData('bedroomTemperature.csv')
-indoorHumidity.importData('indoorHumidity.csv')
-humanDetector.importData('humanDetector.csv')
+#indoorTemperature.importData('indoorTemperature.csv')
+#outdoorTemperature.importData('outdoorTemperature.csv')
+#bedroomTemperature.importData('bedroomTemperature.csv')
+#indoorHumidity.importData('indoorHumidity.csv')
+#humanDetector.importData('humanDetector.csv')
 	
 while True:
 
@@ -106,11 +106,11 @@ while True:
 		print "test 6"
 
 	#if everyHour:
-		indoorTemperature.storeData('indoorTemperature.csv')
-		outdoorTemperature.storeData('outdoorTemperature.csv')
-		bedroomTemperature.storeData('bedroomTemperature.csv')
-		indoorHumidity.storeData('indoorHumidity.csv')
-		humanDetector.storeData('humanDetector.csv')
+		#indoorTemperature.storeData('indoorTemperature.csv')
+		#outdoorTemperature.storeData('outdoorTemperature.csv')
+		#bedroomTemperature.storeData('bedroomTemperature.csv')
+		#indoorHumidity.storeData('indoorHumidity.csv')
+		#humanDetector.storeData('humanDetector.csv')
 		print "test 7"
 
 
