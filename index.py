@@ -50,13 +50,12 @@ while True:
 	else:
 		everyMinute = False
 
-	if datetime.now().hour == thisHour + 1:
-		thisHour = datetime.now().hour
-		everyHour = True
-	else:
-		everyHour = False
+#	if datetime.now().hour == thisHour + 1:
+#		thisHour = datetime.now().hour
+#		everyHour = True
+#	else:
+#		everyHour = False
 
-	print thisHour
 
 	try:
 		if GPIO.input(17):
