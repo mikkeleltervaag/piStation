@@ -3,7 +3,6 @@ from decimal import *
 import datetime
 import math
 import time
-import csv
 
 
 
@@ -12,11 +11,11 @@ from settings import *
 
 try:
 	import serial
-	bluetoothSerial = serial.Serial( "/dev/rfcomm1", baudrate=9600, timeout=10 )
 	import RPi.GPIO as GPIO
 	import os
 	import glob
 	import Adafruit_DHT
+	bluetoothSerial = serial.Serial( "/dev/rfcomm1", baudrate=9600 )
 except:
 	print "import error"
 
@@ -57,12 +56,10 @@ def pir():
 	return motionDetected
 
 def blueTooth(num):
-	try:
-		bluetoothSerial = serial.Serial( "/dev/rfcomm1", baudrate=9600, timeout=10 )
-		bluetoothSerial.write(str(num))
-		test = float(bluetoothSerial.readline().rstrip('\n\r'))
-	except:
-		pass
+	bluetoothSerial.write(str(num))
+	test = float(bluetoothSerial.readline().rstrip('\n\r'))
+	print test
+	return test
  
 class sensor:
 
@@ -99,26 +96,6 @@ class sensor:
 		except:
 			print "Cannot add data to datalogger"
 
-	def storeData(self, name):
-		try:
-			with open(name, 'ab') as fp:
-				saveCSV = csv.writer(fp)
-				saveCSV.writerow([self.dataTimes[-1]] + [self.dataPoints[-1]])
-		except:
-			pass
-
-	def importData(self, name):
-		try:
-			with open(name, 'rb') as f:
-			    reader = csv.reader(f)
-			    for row in reader:
-			    	if datetime.datetime.now() - datetime.timedelta(hours=self.hoursStored) < datetime.datetime.strptime(row[0], "%Y-%m-%d %H:%M:%S.%f"):
-			    		self.dataPoints.append(Decimal(row[1]))
-			    		self.dataTimes.append(datetime.datetime.strptime(row[0], "%Y-%m-%d %H:%M:%S.%f"))
-		except:
-			pass
-
-
 	def getLastData(self):
 		try:
 			return str("%.1f" % self.dataPoints[-1])
@@ -145,32 +122,35 @@ class sensor:
 			dataMinimum = min(self.dataPoints)-((max(self.dataPoints)-min(self.dataPoints))*Decimal(0.1))
 			dataMaximum = max(self.dataPoints)+((max(self.dataPoints)-min(self.dataPoints))*Decimal(0.1))
 
+			if shared != False:
+
+				print "//////////////////////////////"
+				print dataMinimum
+				print dataMaximum
+
+				checkDataMinimum = min(shared)-((max(shared)-min(shared))*Decimal(0.1))
+				checkDataMaximum = max(shared)+((max(shared)-min(shared))*Decimal(0.1))
+
+				if checkDataMinimum < dataMinimum and checkDataMinimum != 0:
+					dataMinimum = checkDataMinimum
+				if checkDataMaximum > dataMaximum:
+					dataMaximum = checkDataMaximum
+
+				print "/////////////"
+				print checkDataMinimum
+				print checkDataMaximum
+				print "/////////////"
+				print dataMinimum
+				print dataMaximum
+
+
+
+
 			timeMaximum = max(self.dataTimes)
-			timeMinimum = min(self.dataTimes)
-			addStart = 0
-
-			if shared != False and len(self.dataPoints) > 1:
-				if len(shared.dataPoints) > 1:
-
-					checkDataMinimum = min(shared.dataPoints)-((max(shared.dataPoints)-min(shared.dataPoints))*Decimal(0.1))
-					checkDataMaximum = max(shared.dataPoints)+((max(shared.dataPoints)-min(shared.dataPoints))*Decimal(0.1))
-
-					if checkDataMinimum < dataMinimum and checkDataMinimum != 0:
-						dataMinimum = checkDataMinimum
-					if checkDataMaximum > dataMaximum:
-						dataMaximum = checkDataMaximum
-
-					checkTimeMinimum = min(shared.dataTimes)
-					checkTimeMaximum = max(shared.dataTimes)
-
-					if checkTimeMinimum < timeMinimum:
-						timeMinimum = checkTimeMinimum
-					if checkTimeMaximum > timeMaximum:
-						timeMaximum = checkTimeMaximum
-
+			timeMinimum = self.dataTimes[0]
 
 			dataHeight = Decimal(height)/Decimal((dataMaximum-dataMinimum))
-			dataWidth = Decimal(width)/Decimal((timeMaximum-timeMinimum).seconds)
+			dataWidth = Decimal(width)/Decimal((max(self.dataTimes)-timeMinimum).seconds)
 
 			if hSeperator == "hour":
 				firstHour = (60-timeMinimum.minute)*60+(60-timeMinimum.second)
@@ -204,8 +184,8 @@ class sensor:
 					point1 = self.dataPoints[dataPoint-1]
 					point2 = self.dataPoints[dataPoint]
 
-				x1 = startX+((self.dataTimes[dataPoint-2]-timeMinimum).seconds*dataWidth)
+				x1 = startX+((self.dataTimes[dataPoint-2]-min(self.dataTimes)).seconds*dataWidth)
 				y1 = startY+height-(dataHeight*(point1-dataMinimum))
-				x2 = startX+((self.dataTimes[dataPoint-1]-timeMinimum).seconds*dataWidth)
+				x2 = startX+((self.dataTimes[dataPoint-1]-min(self.dataTimes)).seconds*dataWidth)
 				y2 = startY+height-(dataHeight*(point2-dataMinimum))
 				pygame.draw.line(screen, color, (x1,y1), (x2,y2), size)
