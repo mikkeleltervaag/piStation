@@ -22,7 +22,7 @@ class sensor:
 			#try:
 			bluetoothSerial = serial.Serial( "/dev/rfcomm1", baudrate=9600 )
 			bluetoothSerial.write(str(self.model))
-			self.lastData = Decimal(float(bluetoothSerial.readline().rstrip('\n\r')))
+			self.lastData = float(bluetoothSerial.readline().rstrip('\n\r'))
 			#except:
 			#	print time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + " Serial error with model " + str(self.model)
 
