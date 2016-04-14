@@ -1,22 +1,43 @@
 import pygame
+import time
+import datetime
+import random
+import csv
+import decimal
+import urllib
 
-# Variables
-screenWidth = 1680
-screenHeight = 1050
+try:
+	import RPi.GPIO as GPIO
+	import os
+except:
+	print time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + " Cannot import Raspberry pi"
+
+# Screen size
+screenWidth = 1400
+screenHeight = 800
+
+# Tile size
+tileSize = 240
+tileSpaceing = 16
 
 # Init pygame
-screen = pygame.display.set_mode((screenWidth,screenHeight), pygame.FULLSCREEN)
+#screen = pygame.display.set_mode((screenWidth,screenHeight), pygame.FULLSCREEN)
+screen = pygame.display.set_mode((screenWidth,screenHeight))
 pygame.init()
 pygame.mouse.set_visible(False)
 
-# Fonts
-debugText = pygame.font.SysFont("monospace", 16)
-topText = pygame.font.SysFont("monospace", 60)
+# Font
+font = "Verdana"
 
 # Colors
+tileColor = (50,50,50)
+
 black = (0,0,0)
 white = (255,255,255)
 gray = (100,100,100)
-darkGray = (40,40,40)
 blue = (0,0,255)
 green = (0,255,0)
+red = (255,0,0)
+
+# Error meassages
+error = []

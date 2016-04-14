@@ -1,86 +1,60 @@
-import pygame
-import time
-import datetime
-from time import gmtime, strftime
-import random
-from decimal import *
-
-
-#Import all settings
+# My imports
 from settings import *
-from sensor import sensor
+from clockTile import *
+from sensor import *
+from writeValue import *
+from brentCrude import *
 
-try:
-	import RPi.GPIO as GPIO
-	import os
+# Setup all sensores
+outdoorTemperature = sensor(100, "outdoorTemperature.csv", 24)
+bedroomTemperature = sensor(101, "bedroomTemperature.csv", 24)
+brentCrudeTicker = sensor("brentCrude", "brentCrude.csv", 24)
 
-	# GPIO Human detector
-	GPIO.setmode(GPIO.BCM)
-	GPIO.setup(17, GPIO.IN)
+# Import data from sensors
+outdoorTemperature.importData()
+bedroomTemperature.importData()
+brentCrudeTicker.importData()
 
-except:
-	pass
+# Variables for the time
+thisMinute = datetime.datetime.now().minute - 1
+thisTenMinute = (datetime.datetime.now().minute/10) - 1
+thisHour = datetime.datetime.now().hour - 1
 
-motionDetected = 0
 
-# Create objects
-#indoorTemperature = sensor("DS18B20", 24)
-indoorTemperature = sensor("dht22_temp", 24)
-outdoorTemperature = sensor(100, 24)
-bedroomTemperature = sensor(101, 24)
-indoorHumidity = sensor("dht22_hum", 24)
-humanDetector = sensor("pir", 24)
-#indoorTemperature = sensor("testSensor", 24)
-	
 while True:
 
-	if datetime.datetime.now().second == 0:
-		everyMinute = True
-	else:
-		everyMinute = False
+	# Every Minute
+	if datetime.datetime.now().minute == thisMinute + 1:
+		thisMinute = datetime.datetime.now().minute
 
-	try:
-		if GPIO.input(17):
-			motionDetected = motionDetected + 1
-	except:
-		pass
-	
+		# Read Sensor data
+		outdoorTemperature.readData()
+		bedroomTemperature.readData()
+		brentCrudeTicker.readData()
 
-	if everyMinute:
-		# Clear screen
-		screen.fill(black)
-
-		# Add to datalogger
-		indoorTemperature.addData()
+		# Add sensor data
 		outdoorTemperature.addData()
 		bedroomTemperature.addData()
-		indoorHumidity.addData()
-		humanDetector.addData()
+		brentCrudeTicker.addData()
 
-		# Reset motion detection
-		motionDetected = 0
+		# Tiles
+		clock(0, 0, 2, 1)
+		writeValue(0, 1, 1, 1, bedroomTemperature, unichr(176).encode("latin-1")+"C")
+		writeValue(1, 1, 1, 1, outdoorTemperature, unichr(176).encode("latin-1")+"C")
+		writeValue(3, 0, 2, 1, brentCrudeTicker)
 
-		# Draw Graph
-		#indoorTemperature.drawGraph(10,70,1660,970, size=3, color=green, hSeperator="hour", vSeperator=1, smooth=5)
-		humanDetector.drawGraph(10,70,1660,480, size=20, color=darkGray, border=False, smooth=10)
-		bedroomTemperature.drawGraph(10,70,1660,480, size=3, color=blue, border=False, shared=indoorTemperature.dataPoints)
-		indoorTemperature.drawGraph(10,70,1660,480, size=3, color=green, hSeperator="hour", vSeperator=1, shared=bedroomTemperature.dataPoints)
-		outdoorTemperature.drawGraph(10,560,825,480, size=3, color=green, hSeperator="hour", vSeperator=1)
-		indoorHumidity.drawGraph(850,560,825,480, size=3, color=blue, hSeperator="hour", vSeperator=1)
-
-		# Top of screen
-		topInfo = str(indoorTemperature.getLastData())+unichr(176).encode("latin-1")+"C "
-		topInfo = topInfo + "(B:"+str(bedroomTemperature.getLastData())+unichr(176).encode("latin-1")+"C "
-		topInfo = topInfo + "O:"+str(outdoorTemperature.getLastData())+unichr(176).encode("latin-1")+"C) "
-		topInfo = topInfo + str(indoorHumidity.getLastData())+"%"
-		#screen.blit(topText.render(str(motionDetected), True, white), (600, 0))
-		screen.blit(topText.render(strftime("%H:%M", time.localtime()), True, white), (screenWidth-185, 0))
-
-		screen.blit(topText.render(topInfo, True, white), (10, 0))
 		
-		#Update screen
-		pygame.display.update()
+	# Every Ten Minute
+	if (datetime.datetime.now().minute/10) == thisTenMinute + 1:
+		thisTenMinute = datetime.datetime.now().minute/10
+		
+		# Store sensor data
+		bedroomTemperature.storeData()
+		outdoorTemperature.storeData()
+		brentCrudeTicker.storeData()
 
-	#Sleep
-	#time.sleep(61-datetime.datetime.now().second)
-	time.sleep(1)
+		
+
+	# Sleep to next minute
+	time.sleep(60-datetime.datetime.now().second)
+	#time.sleep(1)
