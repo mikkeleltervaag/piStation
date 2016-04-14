@@ -31,14 +31,6 @@ class sensor:
 		if self.lastData != "none":
 			self.dataPoints.append(self.lastData)
 			self.dataTimes.append(datetime.datetime.now())
-		
-		try:
-			if  self.dataPoints[-1] == self.dataPoints[-2]:
-				del self.dataTimes[-1]
-				del self.dataPoints[-1]
-		except:
-			print time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + " Cannot delete copy in model " + str(self.model)
-
 
 		try:
 			while datetime.datetime.now() - datetime.timedelta(hours=self.hoursStored) > min(self.dataTimes):
