@@ -28,7 +28,7 @@ class sensor:
 
 	def addData(self):
 		
-		if self.lastData != "none":
+		if self.lastData != none:
 			self.dataPoints.append(self.lastData)
 			self.dataTimes.append(datetime.datetime.now())
 
