@@ -24,7 +24,7 @@ class sensor:
 				bluetoothSerial.write(str(self.model))
 				self.lastData = float(bluetoothSerial.readline().rstrip('\n\r'))
 			except:
-			#	print time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + " Serial error with model " + str(self.model)
+				print time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + " Serial error with model " + str(self.model)
 
 	def addData(self):
 		
