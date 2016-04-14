@@ -15,10 +15,10 @@ def clock(tileX, tileY, tileWidth, tileHeight):
 	i = 0
 	while sizeCheckY < 0 and sizeCheckX < 0:
 
-		clockFont = pygame.font.SysFont(font, (70*tileWidth)-(i*10))
+		clockFont = pygame.font.SysFont(font, (60*tileWidth)-(i*10))
 		clockText = clockFont.render(time.strftime("%H:%M", time.localtime()), True, white)
 
-		dateFont = pygame.font.SysFont(font, (30*tileWidth)-(i*10))
+		dateFont = pygame.font.SysFont(font, (20*tileWidth)-(i*10))
 		dateText = dateFont.render(time.strftime("%Y-%m-%d", time.localtime()), True, white)
 
 		sizeCheckY = (tileSize*tileHeight)-clockText.get_height()-dateText.get_height()-(tileSpaceing*3)
