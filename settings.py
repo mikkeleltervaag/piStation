@@ -13,16 +13,16 @@ except:
 	print time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + " Cannot import Raspberry pi"
 
 # Screen size
-screenWidth = 1400
-screenHeight = 800
+screenWidth = 1680
+screenHeight = 1050
 
 # Tile size
 tileSize = 240
 tileSpaceing = 16
 
 # Init pygame
-#screen = pygame.display.set_mode((screenWidth,screenHeight), pygame.FULLSCREEN)
-screen = pygame.display.set_mode((screenWidth,screenHeight))
+screen = pygame.display.set_mode((screenWidth,screenHeight), pygame.FULLSCREEN)
+#screen = pygame.display.set_mode((screenWidth,screenHeight))
 pygame.init()
 pygame.mouse.set_visible(False)
 
