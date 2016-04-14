@@ -43,6 +43,8 @@ while True:
 		writeValue(1, 1, 1, 1, outdoorTemperature, unichr(176).encode("latin-1")+"C")
 		writeValue(6, 0, 2, 1, brentCrudeTicker)
 
+		print "0"
+
 		
 	# Every Ten Minute
 	if (datetime.datetime.now().minute/10) == thisTenMinute + 1:
@@ -53,8 +55,11 @@ while True:
 		outdoorTemperature.storeData()
 		brentCrudeTicker.storeData()
 
+		print "1"
+
 		
 
 	# Sleep to next minute
+	print time.strftime("%H:%M:%S", time.localtime())
 	time.sleep(60-datetime.datetime.now().second)
 	#time.sleep(1)
