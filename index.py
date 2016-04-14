@@ -41,7 +41,7 @@ while True:
 		clock(0, 0, 2, 1)
 		writeValue(0, 1, 1, 1, bedroomTemperature, unichr(176).encode("latin-1")+"C")
 		writeValue(1, 1, 1, 1, outdoorTemperature, unichr(176).encode("latin-1")+"C")
-		writeValue(4, 0, 2, 1, brentCrudeTicker)
+		writeValue(6, 0, 2, 1, brentCrudeTicker)
 
 		
 	# Every Ten Minute

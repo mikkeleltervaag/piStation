@@ -18,7 +18,7 @@ screenWidth = 1680
 screenHeight = 1050
 
 # Tile size
-tileSpaceing = 10
+tileSpaceing = 20
 numberOfTiles = 8
 tileSize = (screenWidth-(tileSpaceing+1)*numberOfTiles)/numberOfTiles
 
