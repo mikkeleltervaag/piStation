@@ -9,6 +9,7 @@ import urllib
 try:
 	import RPi.GPIO as GPIO
 	import os
+	import serial
 except:
 	print time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + " Cannot import Raspberry pi"
 
