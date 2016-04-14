@@ -32,7 +32,7 @@ def writeValue(tileX, tileY, tileWidth, tileHeight, sensor, extraText=""):
 		valueFont = pygame.font.SysFont(font, (70*tileWidth)-(i*10))
 		valueText = valueFont.render(str(sensor.dataPoints[-1]), True, color)
 
-		dateFont = pygame.font.SysFont(font, (20*tileWidth)-(i))
+		dateFont = pygame.font.SysFont(font, (20*tileWidth)-(i*10))
 		dateText = dateFont.render(sensor.dataTimes[-1].strftime("%H:%M"), True, gray)
 
 		sizeCheckY = (tileSize*tileHeight)-valueText.get_height()-dateText.get_height()-tileSpaceing
