@@ -18,8 +18,8 @@ screenWidth = 1680
 screenHeight = 1050
 
 # Tile size
-tileSize = 240
-tileSpaceing = 16
+tileSpaceing = 10
+tileSize = (screenWidth-110)/10
 
 # Init pygame
 screen = pygame.display.set_mode((screenWidth,screenHeight), pygame.FULLSCREEN)
