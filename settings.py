@@ -20,7 +20,7 @@ screenHeight = 1050
 # Tile size
 tileSpaceing = 20
 numberOfTiles = 8
-tileSize = (screenWidth-(tileSpaceing+1)*numberOfTiles)/numberOfTiles
+tileSize = (screenWidth-(tileSpaceing*(numberOfTiles+1))/numberOfTiles
 
 # Init pygame
 screen = pygame.display.set_mode((screenWidth,screenHeight), pygame.FULLSCREEN)
