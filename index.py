@@ -16,16 +16,16 @@ bedroomTemperature.importData()
 brentCrudeTicker.importData()
 
 # Variables for the time
-thisMinute = datetime.datetime.now().minute - 1
-thisTenMinute = (datetime.datetime.now().minute/10) - 1
-thisHour = datetime.datetime.now().hour - 1
+thisMinute = datetime.datetime.now()
+thisTenMinute = datetime.datetime.now()
+thisHour = datetime.datetime.now()
 
 
 while True:
 
 	# Every Minute
-	if datetime.datetime.now().minute == thisMinute + 1:
-		thisMinute = datetime.datetime.now().minute
+	if datetime.datetime.now() >= thisMinute:
+		thisMinute = datetime.datetime.now() + datetime.timedelta(minutes=1)
 
 		# Read Sensor data
 		outdoorTemperature.readData()
@@ -47,8 +47,8 @@ while True:
 
 		
 	# Every Ten Minute
-	if (datetime.datetime.now().minute/10) == thisTenMinute + 1:
-		thisTenMinute = datetime.datetime.now().minute/10
+	if datetime.datetime.now() >= thisTenMinute:
+		thisTenMinute = datetime.datetime.now() + datetime.timedelta(minutes=10)
 		
 		# Store sensor data
 		bedroomTemperature.storeData()
