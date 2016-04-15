@@ -15,6 +15,7 @@ class sensor:
 		self.lastTime = None
 
 	def readData(self):
+		self.lastData = None
 		if self.model == "test":
 			self.lastData = float(random.randint(220, 250))/10
 			self.lastTime = datetime.datetime.now()
