@@ -12,17 +12,21 @@ class sensor:
 		self.hoursStored = hoursStored
 		self.lastStoredData = datetime.datetime.now()
 		self.lastData = None
+		self.lastTime = None
 
 	def readData(self):
 		if self.model == "test":
 			self.lastData = float(random.randint(220, 250))/10
+			self.lastTime = datetime.datetime.now()
 		elif self.model == "brentCrude":
 			self.lastData = float(getBrentCrude())
+			self.lastTime = datetime.datetime.now()
 		else:
 			try:
 				bluetoothSerial = serial.Serial( "/dev/rfcomm1", baudrate=9600 )
 				bluetoothSerial.write(str(self.model))
 				self.lastData = float(bluetoothSerial.readline().rstrip('\n\r'))
+				self.lastTime = datetime.datetime.now()
 			except:
 				print time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + " Serial error with model " + str(self.model)
 
@@ -30,7 +34,7 @@ class sensor:
 		
 		if self.lastData is not None:
 			self.dataPoints.append(self.lastData)
-			self.dataTimes.append(datetime.datetime.now())
+			self.dataTimes.append(self.lastTime)
 
 		try:
 			while datetime.datetime.now() - datetime.timedelta(hours=self.hoursStored) > min(self.dataTimes):
